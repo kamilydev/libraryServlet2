@@ -26,15 +26,14 @@ public class Logger {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Logger logger = (Logger) o;
-        return Objects.equals(email, logger.email) && Objects.equals(password, logger.password);
+        if (this == o) return true; // Verifica se é o mesmo objeto
+        if (o == null || getClass() != o.getClass()) return false; // Verifica se é do mesmo tipo
+        Logger logger = (Logger) o; // Faz o cast para Logger
+        return Objects.equals(email, logger.email) && Objects.equals(password, logger.password); // Compara os campos relevantes
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, password);
+        return Objects.hash(email, password); // Garante que hashCode é consistente com equals
     }
-
 }

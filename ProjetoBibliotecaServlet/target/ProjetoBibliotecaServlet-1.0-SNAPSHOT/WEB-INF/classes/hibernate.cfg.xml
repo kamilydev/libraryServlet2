@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration">
-<hibernate-configuration>
-    <session-factory>
-        <!-- Configurações do PostgreSQL -->
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/projetoServlet</property>
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">postgres</property>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration">-->
+<!--<hibernate-configuration>-->
+<!--    <session-factory>-->
+<!--        &lt;!&ndash; Configurações do PostgreSQL &ndash;&gt;-->
+<!--        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/libraryServlet</property>-->
+<!--        <property name="hibernate.connection.username">postgres</property>-->
+<!--        <property name="hibernate.connection.password">postgres</property>-->
 
-        <!-- Configurações do Hibernate -->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
-        <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.format_sql">true</property>
+<!--        &lt;!&ndash; Configurações do Hibernate &ndash;&gt;-->
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</property>-->
+<!--        <property name="hibernate.hbm2ddl.auto">update</property>-->
+<!--        <property name="hibernate.show_sql">true</property>-->
+<!--        <property name="hibernate.format_sql">true</property>-->
 
 
-        <!-- Mapeamento de Classe -->
-        <mapping class="hibernate.model.Book"/>
-        <mapping class="hibernate.model.Logger"/>
-    </session-factory>
-</hibernate-configuration>
+<!--        &lt;!&ndash; Mapeamento de Classe &ndash;&gt;-->
+<!--        <mapping class="com.servlet.aula.projetobibliotecaservlet.models.Book"/>-->
+<!--        <mapping class="com.servlet.aula.projetobibliotecaservlet.models.Logger"/>-->
+<!--    </session-factory>-->
+<!--</hibernate-configuration>-->

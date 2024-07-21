@@ -1,0 +1,181 @@
+* {
+    font-family: "Montserrat", sans-serif;
+}
+
+#body {
+    background-color: #a3dce5;
+}
+
+#logo {
+    width: 60px;
+    padding-left: 20px;
+    margin-bottom: -3px;
+}
+
+#header {
+    background-color: #68c4d4;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#header-title{
+    color: white;
+    margin-left: 10px;
+}
+
+#section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#section-title {
+    padding-top: 30px;
+}
+
+#form {
+    margin-top: 30px;
+    padding: 30px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #cde9ef;
+    border-radius: 15px;
+}
+
+.label {
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+
+.input {
+    padding: 2px;
+    border-radius: 2px;
+    text-align: center;
+}
+
+#button-login {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: medium;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+}
+
+#button-login:hover {
+    background-color: #68c4d4;
+    color: white;
+}
+
+#register-link {
+    margin-top: 20px;
+    color: blue;
+}
+
+#register-link:hover {
+    color: #68c4d4;
+}
+
+#footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #89cfdc;
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    bottom: 0;
+}
+
+.button {
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+}
+
+.button:hover {
+    color: white;
+    background-color: #68c4d4;
+}
+
+#back-button {
+    position: absolute;
+    left: 0px;
+    margin: 20px 15px 15px 20px;
+}
+
+#delete-button{
+    margin-left: 5px;
+}
+
+#delete-button:hover {
+    background-color: rgb(240, 40, 40);
+}
+
+#logout-button{
+    color: white;
+    background-color: #3db1c8;
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+}
+
+#logout-button:hover{
+    color: black;
+    background-color: white;
+}
+
+#table {
+    background-color: #cde9ef;
+    border: 1px solid white;
+    border-collapse: collapse;
+    width: fit-content;
+    min-width:60vw;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.table-data {
+    background-color: #cde9ef;
+    border: 1px solid white;
+    padding: 20px 0;
+}
+
+.table-head {
+    background-color: #cde9ef;
+    border: 1px solid white;
+    padding: 20px 0;
+}
+
+#modal{
+    background-color: #cde9ef;
+    text-align: center;
+    border: 0;
+    border-radius: 15px;
+}
+
+#modal-title{
+    margin-bottom: 30px;
+}
+
+#confirm-button{
+    border: solid 1px green;
+}
+
+#confirm-button:hover{
+    background-color: rgb(42, 183, 42);
+}
+
+#cancel-button{
+    border: solid 1px red;
+}
+
+#cancel-button:hover{
+    background-color: rgb(240, 68, 68);
+}

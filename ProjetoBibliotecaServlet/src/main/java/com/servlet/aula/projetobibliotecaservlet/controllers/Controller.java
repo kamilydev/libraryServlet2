@@ -4,6 +4,7 @@ import com.servlet.aula.projetobibliotecaservlet.dao.BookDao;
 import com.servlet.aula.projetobibliotecaservlet.dao.LoggerDao;
 import com.servlet.aula.projetobibliotecaservlet.models.Book;
 import com.servlet.aula.projetobibliotecaservlet.models.Logger;
+import com.servlet.aula.projetobiblioteca.service.AuthenticationService;
 import com.servlet.aula.projetobibliotecaservlet.util.JPAUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -21,18 +22,20 @@ public class Controller extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private BookDao bookDao;
     private LoggerDao loggerDao;
+    private AuthenticationService authService;
 
     public Controller() {
         super();
         EntityManager em = JPAUtil.getEntityManager();
         this.bookDao = new BookDao(em);
         this.loggerDao = new LoggerDao(em);
+        this.authService = new AuthenticationService(loggerDao);
+
     }
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String method = request.getMethod();
-        String path = request.getServletPath();
 
         switch (method) {
             case "GET":
@@ -42,14 +45,10 @@ public class Controller extends HttpServlet {
                 doPost(request, response);
                 break;
             case "PUT":
-                if (path.equals("/atualizar")) {
-                    doPut(request, response);
-                }
+                doPut(request, response);
                 break;
             case "DELETE":
-                if (path.equals("/excluir")) {
-                    doDelete(request, response);
-                }
+                doDelete(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -63,21 +62,16 @@ public class Controller extends HttpServlet {
 
         switch (path) {
             case "/home":
-                System.out.println("teste 1");
                 List<Book> livros = bookDao.listarLivros();
                 request.setAttribute("listaLivros", livros);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("home.jsp").forward(request, response);
                 break;
             case "/cadastrar":
-                System.out.println("teste 2");
-
-                RequestDispatcher rd = request.getRequestDispatcher("biblioteca.jsp"); //
+                RequestDispatcher rd = request.getRequestDispatcher("newBook.jsp");
                 rd.forward(request, response);
                 break;
             case "/login":
-                System.out.println("teste 3");
-
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -94,27 +88,52 @@ public class Controller extends HttpServlet {
                 String nome = request.getParameter("nome");
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
-                Logger logger = new Logger(nome, email, password);
-                loggerDao.cadastrar(logger);
-                response.sendRedirect("login.jsp");
-                System.out.println("teste 4");
+
+                Logger newLogger = new Logger(nome, email, password);
+
+                Logger registerUser = authService.registerUser(newLogger);
+                if (registerUser != null)  {
+                    request.getSession().setAttribute("existingUser", registerUser);
+                    response.sendRedirect("login");
+                } else {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Esse usuário já existe.");
+                }
+                break;
+
+            case "/login":
+                email = request.getParameter("email");
+                password = request.getParameter("password");
+                Logger authenticatedUser = authService.authenticate(email, password);
+
+                if (authenticatedUser != null) {
+                    request.getSession().setAttribute("user", authenticatedUser);
+                    response.sendRedirect("home");
+
+                } else {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuário não encontrado.");
+                }
 
                 break;
+
             case "/cadastrar":
                 String isbn = request.getParameter("isbn");
                 String titulo = request.getParameter("titulo");
                 String categoria = request.getParameter("categoria");
                 int quantidade = Integer.parseInt(request.getParameter("quantidade"));
                 Book book = new Book(isbn, titulo, categoria, quantidade);
-                bookDao.cadastrar(book.getIsbn());
+                bookDao.cadastrar(book);
                 response.sendRedirect("home");
-                System.out.println("teste 5");
-
                 break;
+
+            case "/excluir":
+                String isbnExcluir = request.getParameter("isbn");
+                bookDao.remover(isbnExcluir);
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.sendRedirect("home");
+                break;
+
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                System.out.println("teste 66666");
-
                 break;
         }
     }
@@ -130,12 +149,8 @@ public class Controller extends HttpServlet {
                 .filter(livro -> livro.getIsbn().equals(isbn))
                 .findFirst()
                 .orElse(null);
-        System.out.println("teste 6");
 
         if (book != null) {
-            if (!isbn.isEmpty()) {
-                book.setIsbn(isbn);
-            }
             if (titulo != null && !titulo.isEmpty()) {
                 book.setTitulo(titulo);
             }
@@ -145,18 +160,10 @@ public class Controller extends HttpServlet {
             if (quantidade != null && !quantidade.isEmpty()) {
                 book.setQuantidade(Integer.parseInt(quantidade));
             }
-            bookDao.atualizar(isbn);
+            bookDao.atualizar(book);
+            response.sendRedirect("home");
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Livro não encontrado");
         }
-
-        response.sendRedirect("home");
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String isbn = request.getParameter("isbn");
-        bookDao.remover(isbn);
-        response.sendRedirect("home");
-        System.out.println("teste 7");
-
     }
 }

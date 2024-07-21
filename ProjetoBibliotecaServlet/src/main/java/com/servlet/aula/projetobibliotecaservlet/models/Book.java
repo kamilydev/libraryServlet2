@@ -12,8 +12,6 @@ import java.util.Objects;
 @Table(name = "Book")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String isbn;
     private String titulo;
     private String categoria;
