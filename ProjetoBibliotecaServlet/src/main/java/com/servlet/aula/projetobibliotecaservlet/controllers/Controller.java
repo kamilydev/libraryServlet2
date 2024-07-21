@@ -4,7 +4,7 @@ import com.servlet.aula.projetobibliotecaservlet.dao.BookDao;
 import com.servlet.aula.projetobibliotecaservlet.dao.LoggerDao;
 import com.servlet.aula.projetobibliotecaservlet.models.Book;
 import com.servlet.aula.projetobibliotecaservlet.models.Logger;
-import com.servlet.aula.projetobiblioteca.service.AuthenticationService;
+import com.servlet.aula.projetobibliotecaservlet.service.AuthenticationService;
 import com.servlet.aula.projetobibliotecaservlet.util.JPAUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
